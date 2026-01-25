@@ -61,4 +61,20 @@ last_accessed: timestamp
 
 API endpoints:
 
-CREATE post request: takes a original url and 
+CREATE post request: takes a original url and generates a shorter alias
+READ get request: redirects to the original url 
+UPDATE put requests: handles link usage analytics
+
+
+High Level Design :
+Client: frontend sends a request to the URL shortenign service with the original url 
+URL: Backend recieves the request and generates a short url using hashing and stores the URL to the database
+Manages errors and ensures short urls across all users 
+Database: A highly available database like dynamoDB or Cassandra
+
+
+URL Shortening: 
+API gateway: we have two request types we need an API gateway 
+URL redirection request handler: GET requests with the shortened URL and it will return an 302 found status and the original url in the locations header to facilitate redirection 
+Caching layer: To reduce latency and offload read requests from the database, we implement a read-through caching layer like redis which stores frequently accessed urls and if a url is not in the cache then it will take it from the database and store it in the cache after it finds it.
+Database: stores all of the URL mappings 

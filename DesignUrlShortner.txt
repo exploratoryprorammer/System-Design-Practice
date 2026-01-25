@@ -1,0 +1,64 @@
+Functional Requirements
+
+We extract verbs from the problem statement to identify core operations:
+
+"takes a long URL and generates a shorter alias" → CREATE operation (URL Shortening)
+"redirects users to the original URL" → READ operation (URL Redirection)
+"track link usage" → UPDATE/INCREMENT operation (Analytics)
+Each verb maps to a functional requirement that defines what the system must do.
+
+Users should be able to input a long URL and receive a unique, shortened alias. The shortened URL should use a compact format with English letters and digits to save space and ensure uniqueness.
+
+When users access a shortened URL, the service should redirect them seamlessly to the original URL with minimal delay.
+
+The system should be able to track the number of times each shortened URL is accessed to provide insights into link usage.
+
+Out of Scope
+
+Authentication and Authorization for users (e.g., who can create URLs or access certain analytics).
+Expiration or deletion of URLs by users.
+Advanced analytics beyond click counts (e.g., geographic tracking or device types).
+Scale Requirements
+
+100M Daily Active Users
+Read:write ratio = 100: 1
+Data retention for 5 years
+Assuming 1 million write requests per day
+Assuming each entry is about 500 bytes
+
+
+Non-Functional Requirements
+
+We extract adjectives and descriptive phrases from the problem statement to identify quality constraints:
+
+"unique" alias → System must guarantee no collisions
+"millions of URLs" + "high traffic" → System must handle large scale
+"efficiently" + "near real-time" → System must respond quickly
+"persistent" → System must not lose data
+"handle high traffic" → System must remain operational under load
+Each adjective becomes a non-functional requirement that constrains our design choices.
+
+High Availability: The service should ensure that all URLs are accessible 24/7, with minimal downtime, so users can reliably reach their destinations. (Derived from 'high traffic')
+Low Latency: URL redirections should occur almost instantly, ideally in under a few milliseconds, to provide a seamless experience for users. (Derived from 'near real-time' and 'efficiently')
+High Durability: Shortened URLs should be stored reliably so they persist over time, even across server failures, ensuring long-term accessibility. (Derived from 'persistent')
+Uniqueness: Each shortened URL must map to exactly one original URL across all users. (Derived from 'unique')
+Security: The service must prevent malicious links from being created and protect user data, implementing safeguards against spam, abuse, and unauthorized access to sensitive information.
+
+
+Solution: 
+
+Data Model: You have two data tables the URLMapping and the Analytics table which have a one to one Relationship
+URLMapping has these peices of data
+shortURL: strings
+originalURL: string 
+createdAt: string
+
+Analytics:
+shortURL: string
+click_count: integer 
+last_accessed: timestamp
+
+
+API endpoints:
+
+CREATE post request: takes a original url and 

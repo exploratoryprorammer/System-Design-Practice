@@ -1,0 +1,109 @@
+# System Design Practice
+
+## Main Components
+
+### Microservices
+**Problem:** Contrary to a monolith system, having microservices allows independent scaling, deploying, and failing. A microservice can call upon a different microservice but each microservice will access its own database only.
+
+**How it works:** Services register with a service registry like Consul or Eureka. When needing to use another service, the service registry can be used to find it to then use it.
+
+Fault isolation also prevents cascading failures. If the recommendation service crashes, checkout still works. Circuit breakers can be used to detect failures and stop sending requests to broken services.
+
+**Common uses:** Spring Boot, Node.js with Express.js, and Go with Gin or Echo
+
+---
+
+### Relational Databases
+**Problem:** Database changes must be relational. Using relational databases, consistency can be achieved. NoSQL offers flexibility, relational databases offer guarantees.
+
+**How they work:**
+- **Relationships:** One to many, many to many, one to one
+- **ACID:** Atomic, Consistent, Isolated/Concurrency, Durable: persist after crashes
+
+---
+
+### NoSQL Database
+**Problem:** Instagram's posts have an image, caption, hashtags, location, timestamp and comments. Each comment contains text, author and nested replies. Using a relational database here requires many joins. Schema changes weekly as well. NoSQL databases solve this problem by storing flexible nested data without rigid schemas. One document stores everything without any joins required. Trade relational for flexibility and horizontal scalability.
+
+**How it works:** Sacrifice ACID for flexibility and partition tolerance
+
+**Common uses:** MongoDB, Redis, Apache Cassandra, Amazon DynamoDB
+
+---
+
+### Object Storage
+**Problem:** Netflix needs to store large files for movies and audio. In this case, object storage makes sense instead of a database since they don't have structure. This is why we can use object storage as we can store a file with a key, then use that key later to retrieve that file. This system handles scale, distribution, and replication automatically. File systems would work but they don't scale as they have limited storage and having multiple would require partitioning logic to find them. This is why a key-value pair object storage system is the best for this use case.
+
+**How this works:** Objects live in buckets, each object has the key, binary data (actual file), and metadata (custom type, tags).
+
+Clients communicate with object storage using REST APIs: PUT for uploading and GET for retrieving a file.
+
+**Common implementations:** AWS S3, Google Cloud Storage, and Azure Blob Storage
+
+---
+
+### Cache
+**Problem:** You have a very large database and you're trying to fetch data, and most fetches require the same 100 pieces of data. Users often get the same data repeatedly. The database handles 1000 requests per second and takes 50ms per fetch. This makes the application slow. To solve this you store the frequently accessed data in faster retrievable storage. This drops response time by 80%.
+
+**How this works:**
+Algorithm checks the cache before hitting the database.
+
+**Cache-aside pattern:**
+- Application tries to access the cache to get data, it hits and then it returns the data
+- Application tries to access cache to get data, it misses and then it queries the database to get the data and then it writes the cache and then it comes back to the user
+
+**Write-through cache:** Writes update cache and database simultaneously
+
+**Write-behind cache:** Writes update cache first and then asynchronously update the database
+
+**Eviction Policies:**
+- **LRU (Least Recently Used):** Removes items that are not accessed recently
+- **LFU (Least Frequently Used):** Removes items that are not accessed frequently
+- **TTL (Time to Live):** Removes items after expiration
+
+Cache invalidation keeps data fresh meaning that it uses TTL to fetch new data after a certain time or for critical data invalidate data after it changes.
+
+- **Longer TTL:** Less resources, but stale data
+- **Shorter TTL:** More resources, but fresh data
+
+**Examples:**
+- **Redis:** In-memory caching used for session storage, leaderboards. Can store strings, lists, sets, and sorted sets
+- **Memcached:** Simple in-memory cache for key-value paired data storage, faster for storing simple data but lacks structure that Redis has
+- **CDNs like Cloudflare:** Distributed caches for static assets. They cache images, CSS, and JavaScript files stored at locations worldwide. Good for content delivery optimization
+
+---
+
+### Content Delivery Network (CDN)
+**Problem:** A video is stored in a data center in New York and watched in a lagged format from a user in Tokyo. CDN solves this by storing the data in cached edge servers worldwide. Most traffic is handled by an edge server.
+
+**How they work:** On upload of a static file to a CDN provider, it replicates it to hundreds of edge servers across continents. Edge servers sit in major cities. If it is a cache hit then the edge server instantly serves it. If it is a cache miss the edge server fetches from origin which takes more time and then it caches it locally and then other users in that area get cache hits.
+
+Files cache according to time to live which determines how long the piece of data is updated on the CDN cache.
+
+**Common implementations:** Cloudflare, AWS CloudFront, and Akamai
+
+---
+
+### Message Queues
+**Problem:** An e-commerce site receives 10k orders per minute. The order service creates orders and calls the payment service which takes 2 seconds per order. The order service waits for each payment to complete before accepting the next one which causes orders to pile up. This causes users to see timeout errors. The payment service crashes for 30 seconds. During that window, 5k orders arrive which all fail and revenue is lost. A message queue solves this as it responds to users immediately. The payment service processes messages from the queue at its own pace. If payment crashes, messages wait in the queue. When it recovers it resumes.
+
+**How they work:**
+- **Producers** publish messages to the queue. The order service publishes an order message
+- The queue stores messages durably. If the queue server crashes, messages persist on disk and survive
+- **Consumers** pull messages from the queue and process them and acknowledge if the process was successful
+- **FIFO** ensures messages come in a sequence of first come first serve
+
+**Common implementations:** RabbitMQ, Apache Kafka, AWS SQS
+
+---
+
+### API Gateway
+**Problem:** App talks to 12 microservices. Each service has different authentication methods. Loading the homescreen requires calling 5 services. Multiple API endpoints, authentication schemes and retry strategies are required. A malicious user sends 10k requests per second to order service without rate limiting and the service crashes. API gateways solve this issue by sitting in between clients and microservices. Clients call one endpoint. The gateway routes requests to appropriate services, handles auth, and enforces rate limits and aggregates multiple backend calls.
+
+**How they work:** Clients send request to gateway and it routes to a service. They use JWT tokens and rate limiting, and caching to reduce backend load.
+
+**Request Aggregation** combines multiple backend calls and combines responses to one JSON payload and returns it to the app.
+
+**Load balancing** distributes requests across multiple instances. Three order service instances run and gateway routes requests round-robin.
+
+**Common implementations:** AWS API Gateway, Kong, NGINX Plus

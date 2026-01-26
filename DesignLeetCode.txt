@@ -39,5 +39,19 @@ The serverless function is similar to the container but it has slow startup time
 
 
 Client: Frontend applicatin sends an http create request command
-Problem Service: Service has one method where you submit a solution to the problme 
+Problem Service: Service has one method where you submit a solution to the problem 
+
+Async results retreival 
+How do we avoid connection timeouts during the programming contests when multiple users are accessign the application at the same time. To solve this issue we can user async result retreival.
+This is when the code submission microservice immediately returns the submission results and then the client checks back for accuracy.
+In summary we get:
+instant response from code submission microservice 
+then the client periodically checks the solutions accuracy checker microservice to check how the submission was recieved 
+When the clients recieves a repsonse it returns back to user user
+
+WHy use polling instead of serversend events or websockets:
+Websockets need bidirectional communication and that is a bottleneck to the memory manaagement 
+Seversend reposnses are one way and require long lived connections which could be 10k open connections at the same time.
+Polling is stateless so it is optimal in this case, the cost of polling is negligeble compared to websockets or serversent reponses.
+
 

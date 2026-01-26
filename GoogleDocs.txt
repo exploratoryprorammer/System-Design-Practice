@@ -1,0 +1,12 @@
+Problem:
+Functional requirements: 
+User should be able to create, read, update, and deelete a google docs from their web browser
+Users should be able to view changes on and edit a google docs owned by a different user concurrently 
+Scale Requirements:
+DAU: 1 million 
+Traffic spike: 5x during peak hour
+Avg document size: 100KB
+Edit frequency: 1 edit per second
+Up to 100 concurrent Users
+Non Functional:
+Hihgly available low latency, eventual consistency, Read-your-writes-consistency

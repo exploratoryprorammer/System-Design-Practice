@@ -5,7 +5,6 @@ Every week there is a contest where thousands of users concurrently submit solut
 There is a leaderboard which shows the ranking of participants in real time during the 2 hours. WRITE/READ
 After the contest ends, the leaderboard becoems a frozen historical representation of the contests. READ
 
-Solution 
 Functional Requiremnts: 
 READ: view programming question and question bank, and solution of the users, compilation of the programming question, testing the code against the test cases to get immediate feedback
 WRITE: write a solution to the programming question which should persist. Thousands of users concurrently submit solutions to their 
@@ -18,4 +17,15 @@ persistance => system must be durable and safe
 implicit => secure.
 
 
+Solution: 
+
+High level design:
+View problem:
+Client: Frontend application sends an http get request command
+Problem Service: Service has two methods one for list all problems and one for get problem by name
+Database: Stores problme data: id, problem name, description with constraints, difficulty, example solutions
+
+Submit Solution: 
+Client: Frontend applicatin sends an http create request command
+Problem Service: Service has one method where you submit a solution to the problme 
 

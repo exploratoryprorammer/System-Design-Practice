@@ -26,6 +26,18 @@ Problem Service: Service has two methods one for list all problems and one for g
 Database: Stores problme data: id, problem name, description with constraints, difficulty, example solutions
 
 Submit Solution: 
+Things to think about: a monolith microservice would not fit this as there is a high concurrency non functional requirement. The service that recieves the submission should not be same service that checks if the code is correct in real time. That service should not be the same as the code compiling service
+We have three services submit solution, solution compiler, solution accuracy checker. We also utilize a message queue here. The code evaluation service will see spikes during the start and end of the competetion
+Code evaluation validates the submission and sends a message with the userid, problemid, and the solution to the message queue. 
+As the user can send malicous code to run in our checker, the execute microservice is seperate
+
+Code execution system design options:
+API Gateway: although it has low latency as there is not much between the API layer and the code execution not good because malicous code can potentiallly access server data, one users code could consume all resources implying they could crah the entire servers
+Virtual Machines: this is okay as it has isolation of processes of each code execution and it is felxible meaning it can run in many different os, and it has good security. but it is very resource intensive and costly to implement, slow to start and hard to manage
+Container: packages dependencies together with a host OS kernel that is lightweight with consistent environments. This solves many problems from the virtual mahcine as it is lightweight, fast to startup and has a consistent environemnt which is easier to manage. Although it has lower security as it shares the same os kernel in contrast format so less isolation 
+The serverless function is similar to the container but it has slow startup time this is implemented using a caas. It also comes with inherent problems with using the cloud like vendor lock, and limits to usage and cost depending on the cloud service
+
+
 Client: Frontend applicatin sends an http create request command
 Problem Service: Service has one method where you submit a solution to the problme 
 

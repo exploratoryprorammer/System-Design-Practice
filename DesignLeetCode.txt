@@ -1,0 +1,8 @@
+Problem: 
+Question bank store thousands of programming questions. Users should be able to write, compile and submit code against test cases and recieve feedback immediately.
+The code submitted by users should be persisted 
+Every week there is a contest where thousands of users concurrently submit solutions to leetcode problems.
+There is a leaderboard which shows the ranking of participants in real time during the 2 hours.
+After the contest ends, the leaderboard becoems a frozen historical representation of the contests
+
+

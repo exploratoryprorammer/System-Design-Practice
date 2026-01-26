@@ -1,8 +1,14 @@
 Problem: 
 Question bank store thousands of programming questions. Users should be able to write, compile and submit code against test cases and recieve feedback immediately.
 The code submitted by users should be persisted 
-Every week there is a contest where thousands of users concurrently submit solutions to leetcode problems.
-There is a leaderboard which shows the ranking of participants in real time during the 2 hours.
-After the contest ends, the leaderboard becoems a frozen historical representation of the contests
+Every week there is a contest where thousands of users concurrently submit solutions to leetcode problems. WRITE/READ
+There is a leaderboard which shows the ranking of participants in real time during the 2 hours. WRITE/READ
+After the contest ends, the leaderboard becoems a frozen historical representation of the contests. READ
+
+Solution 
+Functional Requiremnts: 
+READ: view programming question and question bank, and solution of the users, compilation of the programming question, testing the code against the test cases to get immediate feedback
+WRITE: write a solution to the programming question which should persist. Thousands of users concurrently submit solutions to their 
+UPDATE: User should be able to compete in a ranked competetion with real time updates.
 
 

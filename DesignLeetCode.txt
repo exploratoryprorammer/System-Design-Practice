@@ -11,4 +11,11 @@ READ: view programming question and question bank, and solution of the users, co
 WRITE: write a solution to the programming question which should persist. Thousands of users concurrently submit solutions to their 
 UPDATE: User should be able to compete in a ranked competetion with real time updates.
 
+Non Functional Requiremnts:
+Thousands of people concurrently  => high Concurrency
+Immediate feedback + real time updates => low latency 
+persistance => system must be durable and safe
+implicit => secure.
+
+
 

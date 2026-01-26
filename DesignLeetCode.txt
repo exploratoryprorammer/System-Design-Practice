@@ -55,3 +55,10 @@ Seversend reposnses are one way and require long lived connections which could b
 Polling is stateless so it is optimal in this case, the cost of polling is negligeble compared to websockets or serversent reponses.
 
 
+How do we maintian the leaderboard:
+Due to the everchanging data a simple sql query wont work as users will not be able to accurately see thier spot on the leaderboard
+Solution: in-memmory sorted radis cache which uses skip lists => O(log n + 50) as we just check all of the peices of data(top 50 or wtv leaderboard needs)not O(n log n) as we do not have to sort the data after every insertion
+skip list: dynamic data structure which maintains data in a sorted order instead of having constant sorting
+After code evaluation service finishes grading the code it sends it to the contest microservice and this allows the contest microservice to recalculate the score relative to the contest and then send the new submission to the Redis
+cache and then send the submission to update the redis cache 
+

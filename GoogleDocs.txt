@@ -10,3 +10,21 @@ Edit frequency: 1 edit per second
 Up to 100 concurrent Users
 Non Functional:
 Hihgly available low latency, eventual consistency, Read-your-writes-consistency
+
+High Level Design 
+Document File URL structure: we would not use a directory file url structure as we do not want to expose collaborators to different file in the subdirectory
+This is why we use a flat file structure
+
+Store Documents: Metadata 
+We will need to have fast queries and filtering
+We will need to maintain data integrity: we want to make sure metadata is consistent and accurate
+We also need transactional consistency
+We will need a relational database
+
+Storing Documents: Document Content 
+Larger and less structured than metadata for text, images and othe rich media. 
+Version History 
+This is why we need to use cloud object storages 
+- They can handle alot of unstructured data
+- They are optimized for high throughput, scalability and durability.
+- Cost effective

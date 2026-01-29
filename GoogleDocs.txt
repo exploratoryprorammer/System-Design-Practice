@@ -28,3 +28,36 @@ This is why we need to use cloud object storages
 - They can handle alot of unstructured data
 - They are optimized for high throughput, scalability and durability.
 - Cost effective
+
+How to represent document content:
+- Document content is rich -> contains bold, italic, underline
+- May contain images, videos
+- Users need to be able to edit the document content is high granularity 
+- User also need to be able to bulk edit the document
+
+Top level:
+document: {
+    title: String,
+    documentId: String,
+    body: Body
+}
+
+Body: {
+    StructuralElement: {
+        Paragraph: {
+            ParagraphStyle
+            Bullet
+            ParagraphElement {
+                TextRun (text with same styling)
+                AutoText
+                PageBreak
+                ColumnBreak
+                Equation
+            }
+        }
+    }
+    Table
+    TableOfContents
+    SectionBreak
+    
+}

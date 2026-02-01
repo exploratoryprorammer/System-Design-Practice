@@ -61,3 +61,10 @@ Body: {
     SectionBreak
     
 }
+
+Multi-user collaboratorive editing 
+- Users shoudl be able to edit the same document concurrently and view each other's changes in real time 
+We have to handle synchronizating of the document state for different Users
+We have to handle conflicts when multiple users edit the same document 
+
+HTTP Polling 

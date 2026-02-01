@@ -86,3 +86,8 @@ Sever Sent Events
 
 Winner: Websocket as it is the best for real time collaborative ediitng. We can add this service in front of docuemnt service to support bidirection communication. 
 Message queue between document service and websocket service to decouple them and improve the availability and reliability of the document service. 
+Handling Conflicts: Last-Write-Wins: edit is timestamped and when conflicts occur, the edit wiht the latest timestamp is chosen as the winner
+
+Last-Write-Wins is fine for collaboration documents that barely have conflicts but google docs uses operation transformation which ensures that all users see the same final document state after a series of edits, even if they are made out of order. 
+It does this by applying transformation functions to modify the conflicting operation so that they can be applied in a way that preserves the intention of each user's changes. 
+Example of OT: user A edits "Hello beautiful world" then user A inserts "amazing" at position 6 so then the word amazing goes to position 16 as beautiful is 10 characters long so "Hello beautiful amazing World"

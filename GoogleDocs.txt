@@ -83,3 +83,6 @@ Sever Sent Events
 - Cons: one-way communication only, limited browser support, may require additional mechanism for client to serve updates
 
 
+
+Winner: Websocket as it is the best for real time collaborative ediitng. We can add this service in front of docuemnt service to support bidirection communication. 
+Message queue between document service and websocket service to decouple them and improve the availability and reliability of the document service. 

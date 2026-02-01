@@ -77,4 +77,9 @@ Websocket:
 - Pros: Low Latency, effecient, bidirectional, reduced server load compared to Polling
 - Cons: More complex to implement, requires websocket-specific infa, need ot handle connect management and reconnection
 
+Sever Sent Events 
+- Server pushes updates to client over HTTP
+- Pros: real time updates, works over standard http, automatic reconnection, simpler than Websocket
+- Cons: one-way communication only, limited browser support, may require additional mechanism for client to serve updates
+
 

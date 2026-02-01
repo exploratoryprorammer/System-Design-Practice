@@ -68,3 +68,13 @@ We have to handle synchronizating of the document state for different Users
 We have to handle conflicts when multiple users edit the same document 
 
 HTTP Polling 
+- Client periodically requests updates form server
+Pros: Simple to implement, works with standard http infa, supports all browsers
+Cons: High latency, server overhead, bandwidth intensive
+
+Websocket:
+- Persistent bidirection connection between client and server
+- Pros: Low Latency, effecient, bidirectional, reduced server load compared to Polling
+- Cons: More complex to implement, requires websocket-specific infa, need ot handle connect management and reconnection
+
+

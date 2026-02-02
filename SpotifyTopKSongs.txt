@@ -1,0 +1,8 @@
+### Design Spotify Top K Songs
+
+Background: Typically there are four types of windows in stream processing systems:
+tumbling window, sliding window, session window, and global window
+
+Global window: window that covers the entire period of data. In context: global window means top k songs of all time 
+Tumbling window: fixed size window that does not slide: In context: tumbling window means top k songs of a predefined time interval 
+Sliding window: dynamic window that slides over time. 

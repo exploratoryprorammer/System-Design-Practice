@@ -56,3 +56,12 @@ persist the heap for recovery avoiding the need to replay all events which would
 Query Flexibility: the service only supports queries for all time top K videos.
 It needs to be extended to support querying top k for specific time windows 
 
+
+
+Global window Top K, High QPS: need to scale for more users 
+
+How do we partition service into multiple instances to increase the throughput?
+Round Robin: 
+partition resources throughout equally 
+This can lead to inconsistencies as events in same list may be processed in different instances. We need to have more than top K in each partiition as 
+the song may not be top K in one partition but top K in global sense it is. 

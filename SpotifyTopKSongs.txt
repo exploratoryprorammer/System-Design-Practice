@@ -65,3 +65,18 @@ Round Robin:
 partition resources throughout equally 
 This can lead to inconsistencies as events in same list may be processed in different instances. We need to have more than top K in each partiition as 
 the song may not be top K in one partition but top K in global sense it is. 
+
+Fixed Hash: Partition the stream with a song id hash 
+Partition  = Hash(song_id) % number of partitions 
+Ensures consistency: we do not need to record more than top K songs in each partion: solves the issue with a round robin use 
+Easy to implement and scales well 
+Good load distribution if song requests are uniformly spread 
+Cons: 
+Hotspots can occur if a song become extremely popular 
+Rebalancing is complex. If number of songs changes then redistributed across the partitions can change 
+
+Dynamic Hash: consistent hashing used to dynamically adjust the number of partiitons 
+Technicals
+1. Hash the song id,
+2. Hash the backend instance 
+ 

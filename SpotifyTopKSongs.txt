@@ -35,4 +35,24 @@ If the question for the top K songs in Global window, we have an even simpler im
 
 High Level Design: 
 Global window Top K, Low QPS 
+Heap Algo for Top K with hashmap:
+
+Check if the song is in a hashmap:
+If it is not then we check if the view count is smaller then the top of the heap which has the smallest view count in the minheap
+otherwise, check if if the videoId exists in the haspmap:
+    if it does then update the count in the hash map 
+    Re-heapify by performing a bubble down operation, where the element swaps with its children until the heap property is restored.
+If the video is not in the heap
+    Replace the head of the heap with the new videeo 
+    Perform a sift-down operation to maintain the heap property 
+
+But this design has issues:
+scalability: the service wont operate as a single instance and keep the min heap in memory. 
+It wont be able to handle 120k views/second, so we need a way to scale the service
+
+Fault Tolerance: if the service crashes or is redeployed, the in memeory min heap will be lost. We need a mechanism to 
+persist the heap for recovery avoiding the need to replay all events which would be too slow 
+
+Query Flexibility: the service only supports queries for all time top K videos.
+It needs to be extended to support querying top k for specific time windows 
 

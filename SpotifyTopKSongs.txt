@@ -6,3 +6,12 @@ tumbling window, sliding window, session window, and global window
 Global window: window that covers the entire period of data. In context: global window means top k songs of all time 
 Tumbling window: fixed size window that does not slide: In context: tumbling window means top k songs of a predefined time interval 
 Sliding window: dynamic window that slides over time. 
+ -- Example if we set up a sliding window of 10 minutes wiht a slide interval of 1 minute,
+ all events in the last 10 minutes will be in the same window, but every minute, the window will
+ slide forward by 1 minute. 
+ -- Fixed sliding window: the window size and slide interval are predefined, events are bucketed along a fixed time axis 
+ -- Arbitary sliding window: the slide interval is not fixed. The window sizde is predefined. Events are bucketed along a dynamic time axis
+ meaning the windows open and close based on when events arrive
+
+
+ 

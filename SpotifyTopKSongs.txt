@@ -31,3 +31,8 @@ We would write MapReduce style code to
 Redis Sorted Set Implementation:
 
 If the question for the top K songs in Global window, we have an even simpler implementation using Redis sorted set
+
+
+High Level Design: 
+Global window Top K, Low QPS 
+

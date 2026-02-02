@@ -14,4 +14,20 @@ Sliding window: dynamic window that slides over time.
  meaning the windows open and close based on when events arrive
 
 
- 
+How would top K be implemented in production:
+- Before designing the system, can we just use Flink to implement the top K aggregator in a sliding window?
+
+Stream Processor Implementation:
+In production we would use a stream processor like apache flink, spark streaming, kafka streams, google cloud dataflow, aws kinesis, azure stream analytics, or whatever favorite stream process to implement the top K 
+aggregator. It's a very popular technology and there are many providers out there
+
+The typical data flow in a stream processor is to read datat from a stream and apply transformation and aggregations and write the results to a stream.
+
+We would write MapReduce style code to 
+- Apply transitions
+- Group or partition the data based on keys
+- Use windowing logic   
+
+Redis Sorted Set Implementation:
+
+If the question for the top K songs in Global window, we have an even simpler implementation using Redis sorted set

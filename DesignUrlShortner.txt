@@ -78,3 +78,4 @@ API gateway: we have two request types we need an API gateway
 URL redirection request handler: GET requests with the shortened URL and it will return an 302 found status and the original url in the locations header to facilitate redirection 
 Caching layer: To reduce latency and offload read requests from the database, we implement a read-through caching layer like redis which stores frequently accessed urls and if a url is not in the cache then it will take it from the database and store it in the cache after it finds it.
 Database: stores all of the URL mappings 
+

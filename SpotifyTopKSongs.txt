@@ -78,5 +78,9 @@ Rebalancing is complex. If number of songs changes then redistributed across the
 Dynamic Hash: consistent hashing used to dynamically adjust the number of partiitons 
 Technicals
 1. Hash the song id,
-2. Hash the backend instance 
- 
+2. Hash the backend instance, each backend instance is assigned a position on the same hash ring 
+3. Event to instance hashing: events are routed to nearest instance on the clockwise ring. This means each 
+instance is repsonsible for the range of events between itself and the previous instance on the ring 
+4. Handling instance changes: when a backend instance is added or removed 
+only the range of events between the removed instance and its neighbors are effected 
+

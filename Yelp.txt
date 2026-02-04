@@ -1,0 +1,7 @@
+Yelp connects users with local restaurants through rating based recommendations based on the users interests on that day 
+Main Components of Yelp:
+Search for restaurants: find business near you with name and filters
+Viewing restaurants details, ratings, reviews 
+Writing a review for restaurants: write a review and update derived data 
+
+Non Functional: latency, scale, availability, consistency

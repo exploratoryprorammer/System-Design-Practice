@@ -1,7 +1,18 @@
-Yelp connects users with local restaurants through rating based recommendations based on the users interests on that day 
+Yelp connects users with local businesses through rating based recommendations based on the users interests on that day 
 Main Components of Yelp:
-Search for restaurants: find business near you with name and filters
-Viewing restaurants details, ratings, reviews 
-Writing a review for restaurants: write a review and update derived data 
+Search for businesses: find business near you with name and filters
+Viewing businesses details, ratings, reviews 
+Writing a review for businesses: write a review and update derived data 
 
 Non Functional: latency, scale, availability, consistency
+
+1. Search for businesses 
+Naive Approach: SQL query: issues is it is too slow as you have query through millions of records of data 
+NFRs shape our architecture choices:
+Letency: search p95 should be low hubndresds of millisecodns. Business pages similarly fast. Users expect instant results hwen searching "coffee near me"
+Scale: Real-heavy workload. Large dataset with 200M businesses and 500 M reviews. Search traffic spikes during meal times and weekends.
+Consistency: Reviews must be durable once written.aggregates and seaerch index can be eventually consistent
+Search Businesses: Users search businesses by text query anbd location. Results are filtered by criteria and sorted by distance rating, or relevance 
+A user search: we can add a search index like having geo+text queries to a dedicated search index liek Elasticsearch. The Search Service sits between the API Gatway and the index. On the werite side, the busienss Service handles updates the Business Database - hours changes, new listings, and closures. 
+
+

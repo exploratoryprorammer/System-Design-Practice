@@ -14,5 +14,8 @@ Scale: Real-heavy workload. Large dataset with 200M businesses and 500 M reviews
 Consistency: Reviews must be durable once written.aggregates and seaerch index can be eventually consistent
 Search Businesses: Users search businesses by text query anbd location. Results are filtered by criteria and sorted by distance rating, or relevance 
 A user search: we can add a search index like having geo+text queries to a dedicated search index liek Elasticsearch. The Search Service sits between the API Gatway and the index. On the werite side, the busienss Service handles updates the Business Database - hours changes, new listings, and closures. 
-
+How do we keep the search index fresh?
+Dual Write: this is where the client this is where the service that writes does in both the database and the search index at the same time.
+If the script fails then there can be a resyncing script which runs to coordinate the database and search index. 
+CDC pipeline: watches the business transaction logs and updates the search index asynchronously 
 
